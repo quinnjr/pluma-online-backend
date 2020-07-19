@@ -5,62 +5,76 @@
 namespace PluMA\Models;
 
 use \Phalcon\Mvc\Model;
-use \Phalcon\Mvc\Model\Behavior\Timestampable;
 
 class Plugins extends Model {
   /**
    *
    * @var integer
    */
-  protected integer $plu_id;
+  protected int $id;
 
   /**
    *
    * @var string
    */
-  protected string $plu_name;
+  protected string $name;
 
   /**
    *
    * @var integer
    */
-  protected integer $plu_category_id;
+  protected int $category_id;
 
   /**
    *
    * @var string
    */
-  protected string $plu_description;
+  protected string $description;
 
   /**
    *
    * @var string
    */
-  protected string $plu_github_url;
+  protected string $github_url;
 
   /**
    *
    * @var integer
    */
-  protected integer $plu_language_id;
+  protected int $language_id;
 
   /**
    *
    * @var DateTime
    */
-  protected DateTime $created_at;
+  protected string $created_at;
 
   /**
    *
    * @var DateTime
    */
-  protected DateTime $updated_at;
+  protected string $updated_at;
 
   public function initialize() {
     $this->setSchema('public');
     $this->setSource('plugins');
 
-    $this->hasOne('plu_category_id', Categories::class, 'cat_id');
-    $this->hasOne('plu_language_id', Languages::class, 'lang_id');
+    $this->hasOne(
+      'category_id',
+      Categories::class,
+      'id',
+      [
+        'reusable' => true
+      ]
+    );
+
+    $this->hasOne(
+      'language_id',
+      Languages::class,
+      'id',
+      [
+        'reuseable' => true
+      ]
+    );
   }
 }

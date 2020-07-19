@@ -15,49 +15,49 @@ class People extends Model {
    * @Identity
    * @Column(type="integer", length=32, nullable=false)
    */
-  protected int $ppl_id;
+  protected int $id;
 
   /**
    *
    * @var string
    * Column(nullable=false)
    */
-  protected string $ppl_name;
+  protected string $name;
 
   /**
    *
    * @var integer
    * @Column(type="integer", length=32, nullable=false)
    */
-  protected int $ppl_role_id;
+  protected int $role_id;
 
   /**
    *
    * @var string
    * @Column(type="string", nullable=false)
    */
-  protected string $ppl_title;
+  protected string $title;
 
   /**
    *
    * @var string
    * @Column(type="string", nullable=false)
    */
-  protected string $ppl_speciality;
+  protected string $speciality;
 
   /**
    *
    * @var string
    * @Column(type="string", nullable=true)
    */
-  protected string $ppl_profile_picture;
+  protected string $profile_picture;
 
   /**
    *
    * @var string
    * @Column(type="string", nullable=true)
    */
-  protected string $ppl_url;
+  protected string $url;
 
   /**
    *

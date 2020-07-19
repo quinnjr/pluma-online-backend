@@ -6,6 +6,9 @@ namespace PluMA\Controllers;
 
 use PluMA\Models\Categories;
 
+/**
+ *
+ */
 class CategoriesController extends AbstractController {
 
   /**
@@ -16,10 +19,8 @@ class CategoriesController extends AbstractController {
   public function getAction() {
     try {
       $categories = Categories::find([
-        'conditions' => '',
-        'bind' => [],
-        'columns' => 'category_id, category_name',
-        'order' => 'category_id'
+        'columns' => 'id, name, updated_at',
+        'order' => 'id'
       ]);
 
       if (!$categories || $categories === null) {

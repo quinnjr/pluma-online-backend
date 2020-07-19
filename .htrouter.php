@@ -14,4 +14,9 @@ if ($uri !== '/' && file_exists(__DIR__ . $uri)) {
 
 $_GET['_url'] = $_SERVER['REQUEST_URI'];
 
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Credentials: true');
+header('Access-Control-Allow-Methods: GET,PUT,POST,DELETE,OPTIONS');
+header('Access-Control-Allow-Headers: Content-Type,Accept,Authorization');
+
 require_once __DIR__ . '/public/index.php';

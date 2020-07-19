@@ -1,0 +1,9 @@
+vendor
+.git*
+.editorconfig
+.env.example
+.htrouter.php
+CONTRIBUTORS.md
+Dockerfile
+README.md
+run.sh

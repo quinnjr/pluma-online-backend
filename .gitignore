@@ -1,5 +1,4 @@
-.vagrant
 vendor
 .env
-rsa*
 .migrations.php
+logs/

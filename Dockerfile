@@ -1,4 +1,4 @@
-FROM alpine:latest as builder
+FROM alpine:latest
 
 ENV CC=/usr/bin/clang
 ENV CXX=/usr/bin/clang++
@@ -12,59 +12,34 @@ ENV CXXFLAGS '-std=c++14 -pedantic -pipe -fPIC -fstack-protector -O3 -Wall -Wext
 
 ENV LDFLAGS '-static -s -L/usr/include -L/usr/lib'
 
-WORKDIR /tmp
+WORKDIR /srv/http/backend
 
-ADD ./frontend /tmp/frontend
-ADD ./backend /srv/http/backend
+ADD . /srv/http/backend
 
 RUN sed -i -e 's/v[[:digit:]]\..*\//edge\//g' /etc/apk/repositories && \
-  apk update && \
-  apk add --no-cache -t .build-deps \
+  apk --no-cache upgrade --update && \
+  apk --no-cache add -t .runtime-deps \
+    argon2 \
     composer \
-    nodejs \
-    npm \
+    musl \
     php7 \
+    php7-ctype \
+    php7-fpm \
+    php7-json \
+    php7-mbstring \
     php7-phalcon \
+    php7-pecl-apcu \
     php7-pecl-psr \
     php7-pgsql \
-    php7-ctype && \
-  mkdir -p /srv/http/frontend/public
-
-RUN cd frontend && \
-  npm install --cache /tmp/npm-cache --no-fund && \
-  npx ng build --aot \
-    --build-optimizer \
-    --common-chunk \
-    --cross-origin anonymous \
-    --extract-css \
-    --optimization \
-    --output-path=/srv/http/frontend/public \
-    --prod \
-    --subresource-integrity \
-    --vendor-chunk && \
-  cd /srv/http/backend && \
-  composer update --no-dev --no-autoloader --no-suggest --no-cache
-
-RUN rm -rf /tmp/* && \
-  apk del .build-deps && \
+    re2c && \
+  ln -sf /srv/http/backend/etc/php7/php-fpm.d/www.conf /etc/php7/php-fpm.d/www.conf && \
+  rm -rf /tmp/* && \
   rm -rf /var/cache/apk/* /root/.npm /root/.composer
 
-FROM alpine:latest
+EXPOSE 9000
 
-WORKDIR /srv/http
+VOLUME [ "/srv/http/backend" ]
 
-COPY --from=builder /srv/http/frontend /srv/http/frontend
-COPY --from=builder /srv/http/backend /srv/http/backend
+STOPSIGNAL SIGQUIT
 
-RUN sed -i -e 's/v[[:digit:]]\..*\//edge\//g' /etc/apk/repositories && \
-  apk add -t .runtime-deps \
-    php7 \
-    php7-phalcon \
-    php7-pecl-psr \
-    php7-pgsql \
-    php7-pdo \
-    php7-ctype
-
-VOLUME [ "/srv/http" ]
-
-CMD ["/bin/sh"]
+CMD [ "php-fpm7", "-R", "-F", "-O" ]

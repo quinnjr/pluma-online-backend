@@ -12,31 +12,31 @@ class Users extends Model {
    *
    * @var integer
    */
-  protected integer $user_id;
+  public int $id;
 
   /**
    *
    * @var string
    */
-  protected string $user_email;
+  public string $email;
 
   /**
    *
    * @var string
    */
-  protected string $user_password_hash;
+  public string $password_hash;
 
   /**
    *
    * @var DateTime
    */
-  protected DateTime $created_at;
+  protected string $created_at;
 
   /**
    *
    * @var DateTime
    */
-  protected DateTime $updated_at;
+  protected string $updated_at;
 
   /**
    * Initialize the Users model.

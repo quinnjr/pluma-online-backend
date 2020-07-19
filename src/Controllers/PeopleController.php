@@ -4,9 +4,9 @@
 
 namespace PluMA\Controllers;
 
-use PluMA\Models\Plugins;
+use PluMA\Models\People;
 
-class PluginsController extends AbstractController {
+class PeopleController extends AbstractController {
 
   /**
    * Returns a list of people.
@@ -15,18 +15,16 @@ class PluginsController extends AbstractController {
    */
   public function getAction() {
     try {
-      $categories = Plugins::find([
+      $people = People::find([
         'conditions' => '',
-        'bind' => [],
-        'columns' => 'id, name',
         'order' => 'id'
       ]);
 
-      if (!$categories || $categories === null) {
+      if (!$people || $people === null) {
         return [];
       }
 
-      return $categories->toArray();
+      return $people->toArray();
     } catch (\PDOException $e) {
       throw $e;
     }

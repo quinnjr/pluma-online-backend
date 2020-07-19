@@ -2,13 +2,11 @@
 // Copyright (c) 2019-2020 FIUBioRG
 // SPDX-License-Identifier: MIT
 
-<?php
-
 namespace PluMA\Models;
 
 use \Phalcon\Mvc\Model;
 
-class Languages extends Model {
+class Categories extends Model {
 
   /**
    *
@@ -17,20 +15,17 @@ class Languages extends Model {
    * @Identity
    * @Column(type="integer", length=32, nullable=false)
    */
-  protected int $lang_id;
+  protected int $id;
 
   /**
    *
    * @var string
    * @Column(nullable=false)
    */
-  protected string $lang_name;
+  protected string $name;
 
-  /**
-   * Initialize method for model.
-   */
   public function initialize() {
     $this->setSchema('public');
-    $this->setSource('languages');
+    $this->setSource('categories');
   }
 }
